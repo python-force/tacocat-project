@@ -5,9 +5,9 @@ from flask_login import LoginManager, login_user, logout_user, login_required, c
 import forms
 import models
 
-# DEBUG = True
-# PORT = 8000
-# HOST = '0.0.0.0'
+DEBUG = True
+PORT = 8000
+HOST = '0.0.0.0'
 
 app = Flask(__name__)
 app.secret_key = 'sd7sa76v8*&%7asf7656#dsjksadjwaalcma.caskascjhavs'
@@ -33,6 +33,10 @@ def after_request(response):
 
 @app.route('/')
 def index():
-    return render_template('index.html')
+    tacos = models.Taco.select().limit(10)
+    return render_template('index.html', tacos=tacos)
 
-app.run(debug=True, port=8000, host='0.0.0.0')
+
+if __name__ == '__main__':
+    models.initialize()
+    app.run(debug=DEBUG, host=HOST, port=PORT)

@@ -25,3 +25,21 @@ class User(UserMixin, Model):
                     password=generate_password_hash(password))
         except IntegrityError:
             raise ValueError("User already exists")
+
+
+class Taco(Model):
+    pub_date = DateTimeField(default=datetime.datetime.now)
+    protein = CharField(max_length=30)
+    shell = CharField(max_length=30)
+    cheese = BooleanField(default=False)
+    extras = TextField()
+
+    class Meta:
+        database = DATABASE
+        order_by = ('-pub_date',)
+
+
+def initialize():
+    DATABASE.connect()
+    DATABASE.create_tables([User, Taco], safe=True)
+    DATABASE.close()
