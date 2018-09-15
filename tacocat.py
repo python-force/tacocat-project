@@ -12,8 +12,6 @@ import models
 app = Flask(__name__)
 app.secret_key = 'sd7sa76v8*&%7asf7656#dsjksadjwaalcma.caskascjhavs'
 
-app.run(debug=True, port=8000, host='0.0.0.0')
-
 login_manager = LoginManager()
 login_manager.init_app(app)
 login_manager.login_view = 'login'
@@ -36,3 +34,5 @@ def after_request(response):
 @app.route('/')
 def index():
     return render_template('index.html')
+
+app.run(debug=True, port=8000, host='0.0.0.0')
