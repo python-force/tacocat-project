@@ -28,6 +28,7 @@ class User(UserMixin, Model):
 
 
 class Taco(Model):
+    user = ForeignKeyField(rel_model=User, related_name='tacos')
     pub_date = DateTimeField(default=datetime.datetime.now)
     protein = CharField(max_length=30)
     shell = CharField(max_length=30)

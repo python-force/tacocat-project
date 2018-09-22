@@ -145,21 +145,21 @@ class TacoViewsTestCase(ViewTestCase):
             self.assertEqual(rv.location, 'http://localhost/')
             self.assertEqual(Taco.select().count(), 1)
 
-        def test_taco_list(self):
-            taco_data = {
-                'protein': 'chicken',
-                'shell': 'flour',
-                'cheese': False,
-                'extras': 'Gimme some guac.'
-            }
-            with test_database(TEST_DB, (User, Taco)):
-                UserModelTestCase.create_users(1)
-                taco_data['user'] = User.select().get()
-                Taco.create(**taco_data)
+    def test_taco_list(self):
+        taco_data = {
+            'protein': 'chicken',
+            'shell': 'flour',
+            'cheese': False,
+            'extras': 'Gimme some guac.'
+        }
+        with test_database(TEST_DB, (User, Taco)):
+            UserModelTestCase.create_users(1)
+            taco_data['user'] = User.select().get()
+            Taco.create(**taco_data)
 
-                rv = self.app.get('/')
-                self.assertNotIn('no tacos yet', rv.get_data(as_text=True))
-                self.assertIn(taco_data['extras'], rv.get_data(as_text=True))
+            rv = self.app.get('/')
+            self.assertNotIn('no tacos yet', rv.get_data(as_text=True))
+            self.assertIn(taco_data['extras'], rv.get_data(as_text=True))
 
 
 if __name__ == '__main__':
